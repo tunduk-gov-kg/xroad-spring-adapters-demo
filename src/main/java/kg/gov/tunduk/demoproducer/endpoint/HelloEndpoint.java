@@ -9,7 +9,6 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class HelloEndpoint {
-
     @ResponsePayload
     @PayloadRoot(localPart = "helloRequest", namespace = "http://tunduk.gov.kg")
     public HelloResponse greet(@RequestPayload HelloRequest request) {

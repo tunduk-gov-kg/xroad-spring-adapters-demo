@@ -3,8 +3,6 @@
            xmlns:tns="http://tunduk.gov.kg"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:import namespace="http://x-road.eu/xsd/xroad.xsd" schemaLocation="http://x-road.eu/xsd/xroad.xsd"/>
-
     <xs:element name="helloRequest" type="tns:HelloRequest"/>
     <xs:element name="helloResponse" type="tns:HelloResponse"/>
 

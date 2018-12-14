@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://tunduk.gov.kg" xmlns:tns="http://tunduk.gov.kg"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="personRequest" type="tns:PersonRequest"/>
+    <xs:element name="gender" type="tns:Gender"/>
+    <xs:element name="personResponse" type="tns:PersonResponse"/>
+
+    <xs:complexType name="PersonRequest">
+        <xs:sequence>
+            <xs:element name="pin" type="xs:string" form="qualified"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonResponse">
+        <xs:sequence>
+            <xs:element name="pin" type="xs:string" form="qualified"/>
+            <xs:element name="name" type="xs:string" form="qualified"/>
+            <xs:element ref="tns:gender"/>
+            <xs:element name="birthDate" type="xs:string" form="qualified"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Gender">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="MALE"/>
+            <xs:enumeration value="FEMALE"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+
