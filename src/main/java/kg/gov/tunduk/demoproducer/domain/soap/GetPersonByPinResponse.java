@@ -9,9 +9,9 @@ import java.time.LocalDate;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PersonResponse", namespace = "http://tunduk.gov.kg")
-@XmlRootElement(name = "personResponse", namespace = "http://tunduk.gov.kg")
-public class PersonResponse {
+@XmlType(name = "GetPersonByPinResponse", namespace = "http://tunduk.gov.kg")
+@XmlRootElement(name = "getPersonByPinResponse", namespace = "http://tunduk.gov.kg")
+public class GetPersonByPinResponse {
 
     @XmlElement(name = "pin", namespace = "http://tunduk.gov.kg", required = true)
     private String pin;

@@ -1,41 +1,47 @@
 package kg.gov.tunduk.demoproducer.endpoint;
 
-import kg.gov.tunduk.demoproducer.domain.soap.Gender;
-import kg.gov.tunduk.demoproducer.domain.soap.PersonRequest;
-import kg.gov.tunduk.demoproducer.domain.soap.PersonResponse;
+import kg.gov.tunduk.demoproducer.domain.entity.Person;
+import kg.gov.tunduk.demoproducer.domain.soap.GetPersonByPinRequest;
+import kg.gov.tunduk.demoproducer.domain.soap.GetPersonByPinResponse;
+import kg.gov.tunduk.demoproducer.repository.PersonRepository;
+import kg.gov.tunduk.xroad.XRoadEndpoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.bind.JAXBException;
 import java.util.Optional;
 
 @Endpoint
-public class PersonEndpoint {
+public class PersonEndpoint extends XRoadEndpoint {
 
-    private static List<PersonResponse> people = new ArrayList<>();
+    private final PersonRepository personRepository;
 
-    static {
-        PersonResponse samplePerson = new PersonResponse();
-        samplePerson.setPin("1");
-        samplePerson.setName("John Doe");
-        samplePerson.setBirthDate(LocalDate.of(1970, Month.APRIL, 1));
-        samplePerson.setGender(Gender.MALE);
-        people.add(samplePerson);
+    @Autowired
+    public PersonEndpoint(PersonRepository personRepository) throws JAXBException {
+        this.personRepository = personRepository;
     }
 
     @ResponsePayload
-    @PayloadRoot(localPart = "personRequest", namespace = "http://tunduk.gov.kg")
-    public PersonResponse getPerson(@RequestPayload PersonRequest request) {
-        Optional<PersonResponse> personResponse = people.stream().filter(person -> person.getPin().equals(request.getPin())).findFirst();
-        if (personResponse.isPresent()) {
-            return personResponse.get();
+    @PayloadRoot(localPart = "getPersonByPinRequest", namespace = "http://tunduk.gov.kg")
+    public GetPersonByPinResponse getPersonByPin(@RequestPayload GetPersonByPinRequest request) {
+        Optional<Person> personOptional = personRepository.findByPin(request.getPin());
+        if (personOptional.isPresent()) {
+            return createResponse(personOptional.get());
         } else {
             throw new IllegalArgumentException("No person found");
         }
+    }
+
+
+    private GetPersonByPinResponse createResponse(Person person) {
+        GetPersonByPinResponse response = new GetPersonByPinResponse();
+        response.setPin(person.getPin());
+        response.setName(person.getName());
+        response.setBirthDate(person.getBirthDate());
+        response.setGender(person.getGender());
+        return response;
     }
 }

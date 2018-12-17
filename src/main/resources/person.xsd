@@ -2,17 +2,17 @@
 <xs:schema version="1.0" targetNamespace="http://tunduk.gov.kg" xmlns:tns="http://tunduk.gov.kg"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="personRequest" type="tns:PersonRequest"/>
+    <xs:element name="getPersonByPinRequest" type="tns:GetPersonByPinRequest"/>
     <xs:element name="gender" type="tns:Gender"/>
-    <xs:element name="personResponse" type="tns:PersonResponse"/>
+    <xs:element name="getPersonByPinResponse" type="tns:GetPersonByPinResponse"/>
 
-    <xs:complexType name="PersonRequest">
+    <xs:complexType name="GetPersonByPinRequest">
         <xs:sequence>
             <xs:element name="pin" type="xs:string" form="qualified"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PersonResponse">
+    <xs:complexType name="GetPersonByPinResponse">
         <xs:sequence>
             <xs:element name="pin" type="xs:string" form="qualified"/>
             <xs:element name="name" type="xs:string" form="qualified"/>

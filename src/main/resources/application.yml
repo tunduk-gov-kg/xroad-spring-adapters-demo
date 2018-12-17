@@ -1,2 +1,15 @@
 server:
   port: 8888
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/demo-producer
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false

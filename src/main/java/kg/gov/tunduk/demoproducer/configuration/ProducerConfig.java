@@ -22,32 +22,17 @@ public class ProducerConfig extends XRoadConfiguration {
     public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
-        return new ServletRegistrationBean(servlet, "/ws/*");
+        return new ServletRegistrationBean(servlet);
     }
 
-    @Bean(name = "hello")
-    public XRoadWsdlDefinition createWsdl(@Qualifier("countriesSchema") XsdSchema helloSchema) {
-        XRoadWsdlDefinition wsdl = new XRoadWsdlDefinition();
-        wsdl.setPortTypeName("HelloPort");
-        wsdl.setLocationUri("/countries");
-        wsdl.setTargetNamespace("http://tunduk.gov.kg");
-        wsdl.setSchema(helloSchema);
-        return wsdl;
-    }
-
-    @Bean(name = "person")
+    @Bean(name = "getPersonByPin")
     public XRoadWsdlDefinition personWsdl(@Qualifier("personSchema") XsdSchema personSchema) {
         XRoadWsdlDefinition wsdl = new XRoadWsdlDefinition();
         wsdl.setPortTypeName("PersonPort");
-        wsdl.setLocationUri("/person");
+        wsdl.setLocationUri("getPersonByPin");
         wsdl.setTargetNamespace("http://tunduk.gov.kg");
         wsdl.setSchema(personSchema);
         return wsdl;
-    }
-
-    @Bean("countriesSchema")
-    public XsdSchema countriesSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("hello.xsd"));
     }
 
     @Bean("personSchema")
